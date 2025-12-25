@@ -1,10 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Product } from './models/product.model';
+import { Navbar } from './navbar/navbar';
+import { ProductCard } from './product-card/product-card';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Navbar, ProductCard],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -12,7 +14,7 @@ export class App {
   protected readonly title = signal('product_browsing_interface');
 
   // test products
-  product: Product[] = [
+  products: Product[] = [
     {
       id: 1,
       name: 'Wireless Headphones',
