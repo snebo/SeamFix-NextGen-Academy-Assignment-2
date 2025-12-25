@@ -12,7 +12,7 @@ import { ProductCard } from './product-card/product-card';
 })
 export class App {
   protected readonly title = signal('product_browsing_interface');
-
+  cart: Product[] = []
   // test products
   products: Product[] = [
     {
@@ -58,4 +58,17 @@ export class App {
       imageUrl: 'https://placehold.co/200x200?text=USB+Hub'
     },
   ]
+
+  // parent listening for product click
+  handleCardClicked(clickedItem: Product) {
+    const idx = this.cart.findIndex(p => p.id === clickedItem.id) //get current idx if it exists
+    if (idx > -1) {
+      this.cart.splice(idx, 1); // remove it from cart
+    } else { this.cart.push(clickedItem) }
+  }
+
+  // quick check
+  isProductInCart(id: number): boolean {
+    return this.cart.some(p => p.id === id);
+  }
 }

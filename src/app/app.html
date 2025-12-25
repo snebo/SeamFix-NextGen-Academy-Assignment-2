@@ -7,14 +7,14 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<app-navbar></app-navbar>
+<app-navbar [cartCount]="cart.length"></app-navbar>
 
 <main class="product-grid">
   @for (item of products; track item.id) {
     <app-product-card
       [product]="item"
-      [isSelected]="false">
-    </app-product-card>
+      [isSelected]="isProductInCart(item.id)"
+      (cardClicked)="handleCardClicked($event)"> </app-product-card>
   }
 </main>
 

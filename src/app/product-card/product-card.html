@@ -1,4 +1,4 @@
-<div class="card" [class.selected]="isSelected">
+<div class="card" [class.selected]="isSelected" (click)="onSelect()">
   <img [src]="product.imageUrl" [alt]="product.name">
   <h3>{{ product.name }}</h3>
   <p>{{ product.description }}</p>

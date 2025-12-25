@@ -1,0 +1,18 @@
+.card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card:hover {
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* selected card color */
+.card.selected {
+  background-color: #e3f2fd; /* Light blue */
+  border-color: #2196f3;
+}
