@@ -1,6 +1,5 @@
-<nav>
-  <h1>Product Store</h1>
-  <div class="cart-badge">
-    Cart: <span>{{ cartCount }}</span>
-  </div>
+<nav >
+  <h1>My Store</h1>
+  <app-search-input (searchChanged)="onSearchRelay($event)"></app-search-input>
+  <div class="cart">Cart: {{ cartCount }}</div>
 </nav>

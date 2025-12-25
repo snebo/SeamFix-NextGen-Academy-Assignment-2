@@ -58,6 +58,15 @@ export class App {
       imageUrl: 'https://placehold.co/200x200?text=USB+Hub'
     },
   ]
+  filteredProducts: Product[] = [...this.products]
+
+  handleSearch(query: string) {
+    const searchTerm = query.toLowerCase();
+
+    this.filteredProducts = this.products.filter(p =>
+      p.name.toLowerCase().includes(searchTerm)
+    );
+  }
 
   // parent listening for product click
   handleCardClicked(clickedItem: Product) {

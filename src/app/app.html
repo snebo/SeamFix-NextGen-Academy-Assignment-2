@@ -7,16 +7,19 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<app-navbar [cartCount]="cart.length"></app-navbar>
+<app-navbar
+  [cartCount]="cart.length"
+  (searchRequest)="handleSearch($event)">
+</app-navbar>
 
 <main class="product-grid">
-  @for (item of products; track item.id) {
+  @for (item of filteredProducts; track item.id) {
     <app-product-card
       [product]="item"
       [isSelected]="isProductInCart(item.id)"
-      (cardClicked)="handleCardClicked($event)"> </app-product-card>
-  }
-</main>
+      (cardClicked)="handleCardClicked($event)">
+    </app-product-card>
+  } </main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
