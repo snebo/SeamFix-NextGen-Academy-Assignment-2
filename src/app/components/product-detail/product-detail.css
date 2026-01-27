@@ -11,6 +11,7 @@
   cursor: pointer;
   font-size: 1rem;
   margin-bottom: 1rem;
+  padding: 0.5rem 0;
 }
 
 .back-button:hover {
@@ -20,11 +21,15 @@
 .product-detail {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
+  gap: 3rem;
   background: white;
   padding: 2rem;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.product-image-section {
+  position: relative;
 }
 
 .product-image {
@@ -32,42 +37,98 @@
   border-radius: 8px;
 }
 
+.category-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #007bff;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
 .product-info h1 {
   margin-top: 0;
+  font-size: 2rem;
 }
 
 .description {
   color: #666;
   line-height: 1.6;
+  font-size: 1.1rem;
+  margin: 1.5rem 0;
 }
 
 .price {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: #28a745;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
+}
+
+.product-meta {
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+}
+
+.meta-item {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+}
+
+.meta-item strong {
+  color: #495057;
 }
 
 .cart-button {
+  width: 100%;
   padding: 1rem 2rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   border: none;
   border-radius: 4px;
-  background: #007bff;
+  background: #28a745;
   color: white;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.cart-button:hover {
+  background: #218838;
 }
 
 .cart-button.in-cart {
   background: #dc3545;
 }
 
-.cart-button:hover {
-  opacity: 0.9;
+.cart-button.in-cart:hover {
+  background: #c82333;
+}
+
+.cart-status {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  border-radius: 4px;
+  color: #155724;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-icon {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 @media (max-width: 768px) {
   .product-detail {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }

@@ -1,5 +1,18 @@
-<nav >
-  <h1>My Store</h1>
-  <app-search-input (searchChanged)="onSearchRelay($event)"></app-search-input>
-  <div class="cart">Cart: {{ cartCount }}</div>
+<nav class="navbar">
+  <div class="navbar-brand" (click)="navigateToHome()" style="cursor: pointer;">
+    <h1>Product Store</h1>
+  </div>
+
+  <div class="navbar-search">
+    <input
+      type="text"
+      placeholder="Search products..."
+      (input)="onSearchInput($event)"
+      class="search-input">
+  </div>
+
+  <div class="navbar-cart" (click)="navigateToCart()">
+    <span class="cart-icon">🛒</span>
+    <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+  </div>
 </nav>

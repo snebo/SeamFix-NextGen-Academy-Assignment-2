@@ -9,29 +9,18 @@
 
   <div *ngIf="cartItems.length > 0" class="cart-content">
     <div class="cart-items">
-      <div *ngFor="let item of cartItems" class="cart-item">
-        <img [src]="item.imageUrl" [alt]="item.name">
-        <div class="item-details">
-          <h3>{{ item.name }}</h3>
-          <p>{{ item.description }}</p>
-          <p class="price">${{ item.price.toFixed(2) }}</p>
-        </div>
-        <button class="remove-button" (click)="removeFromCart(item)">Remove</button>
-      </div>
+      <h2>Items in Cart ({{ cartItems.length }})</h2>
+      <ul class="cart-list">
+        <li *ngFor="let item of cartItems; let i = index" class="cart-item-name">
+          {{ i + 1 }}. {{ item.name }}
+        </li>
+      </ul>
     </div>
 
-    <div class="cart-summary">
-      <h2>Order Summary</h2>
-      <div class="summary-row">
-        <span>Items ({{ cartItems.length }})</span>
-        <span>${{ getTotalPrice().toFixed(2) }}</span>
-      </div>
-      <div class="summary-row total">
-        <span>Total</span>
-        <span>${{ getTotalPrice().toFixed(2) }}</span>
-      </div>
-      <button class="checkout-button">Proceed to Checkout</button>
-      <button class="continue-button" (click)="continueShopping()">Continue Shopping</button>
+    <div class="cart-actions">
+      <button class="continue-button" (click)="continueShopping()">
+        Continue Shopping
+      </button>
     </div>
   </div>
 </div>

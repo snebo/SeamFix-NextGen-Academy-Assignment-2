@@ -7,6 +7,6 @@
     *ngFor="let item of filteredProducts"
     [product]="item"
     [isSelected]="isProductInCart(item.id)"
-    (cardClicked)="handleCardClicked($event)">
+    (addToCart)="handleAddToCart($event)">
   </app-product-card>
 </main>

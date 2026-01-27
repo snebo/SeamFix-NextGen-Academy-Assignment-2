@@ -14,6 +14,7 @@ import { Navbar } from '../../navbar/navbar';
 })
 export class ProductDetail implements OnInit {
   product?: Product;
+  category: string = '';
   isInCart: boolean = false;
 
   constructor(
@@ -24,15 +25,25 @@ export class ProductDetail implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Get product ID from route params
     const id = Number(this.route.snapshot.paramMap.get('id'));
 
+    // Get category from query params
+    this.route.queryParams.subscribe(params => {
+      this.category = params['category'] || '';
+    });
+
+    // Fetch product by ID from API
     this.productService.getProductById(id).subscribe({
       next: (data: Product) => {
         this.product = data;
+        // Use category from query params instead of API
+        if (this.category) {
+          this.product.category = this.category;
+        }
         this.isInCart = this.productService.isInCart(id);
-        this.cdr.detectChanges()
+        this.cdr.detectChanges();
       },
-
       error: (err) => {
         console.error('Error fetching product:', err);
         this.router.navigate(['/not-found']);
@@ -44,6 +55,7 @@ export class ProductDetail implements OnInit {
     if (this.product) {
       this.productService.toggleCart(this.product);
       this.isInCart = this.productService.isInCart(this.product.id);
+      this.cdr.detectChanges();
     }
   }
 

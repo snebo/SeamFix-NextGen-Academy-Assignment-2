@@ -22,6 +22,7 @@ export class ProductList implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Fetch all products from API
     this.productService.getAllProducts().subscribe({
       next: (data: Product[]) => {
         this.products = data;
@@ -37,12 +38,15 @@ export class ProductList implements OnInit {
   handleSearch(query: string) {
     const searchTerm = query.toLowerCase();
     this.filteredProducts = this.products.filter((p: Product) =>
-      p.name.toLowerCase().includes(searchTerm)
+      p.name.toLowerCase().includes(searchTerm) ||
+      p.category.toLowerCase().includes(searchTerm)
     );
   }
 
-  handleCardClicked(clickedItem: Product) {
-    this.productService.toggleCart(clickedItem);
+  handleAddToCart(product: Product) {
+    this.productService.toggleCart(product);
+    // Force update to reflect cart changes
+    this.cdr.detectChanges();
   }
 
   isProductInCart(id: number): boolean {

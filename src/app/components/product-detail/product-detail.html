@@ -3,19 +3,35 @@
   <button class="back-button" (click)="goBack()">← Back to Products</button>
 
   <div class="product-detail">
-    <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+    <div class="product-image-section">
+      <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+      <span class="category-badge">{{ product.category }}</span>
+    </div>
 
     <div class="product-info">
       <h1>{{ product.name }}</h1>
       <p class="description">{{ product.description }}</p>
       <p class="price">${{ product.price.toFixed(2) }}</p>
 
+      <div class="product-meta">
+        <div class="meta-item">
+          <strong>Category:</strong> {{ product.category }}
+        </div>
+        <div class="meta-item">
+          <strong>Product ID:</strong> {{ product.id }}
+        </div>
+      </div>
+
       <button
         class="cart-button"
         [class.in-cart]="isInCart"
         (click)="toggleCart()">
-        {{ isInCart ? 'Remove from Cart' : 'Add to Cart' }}
+        {{ isInCart ? '✓ Remove from Cart' : '+ Add to Cart' }}
       </button>
+
+      <div *ngIf="isInCart" class="cart-status">
+        <span class="status-icon">✓</span> This item is in your cart
+      </div>
     </div>
   </div>
 </div>

@@ -1,6 +1,21 @@
-<div class="card" [class.selected]="isSelected" (click)="onSelect()">
-  <img [src]="product.imageUrl" [alt]="product.name">
-  <h3>{{ product.name }}</h3>
-  <p>{{ product.description }}</p>
-  <div class="price">{{ product.price | currency }}</div>
+<div class="product-card" [class.selected]="isSelected">
+  <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+  <div class="product-info">
+    <h3 class="product-name">{{ product.name }}</h3>
+    <p class="product-description">{{ product.description }}</p>
+    <p class="product-price">${{ product.price.toFixed(2) }}</p>
+    <span class="product-category">{{ product.category }}</span>
+
+    <div class="button-group">
+      <button class="view-details-btn" (click)="viewDetails()">
+        View Details
+      </button>
+      <button
+        class="add-to-cart-btn"
+        [class.in-cart]="isSelected"
+        (click)="onAddToCart($event)">
+        {{ isSelected ? 'In Cart' : 'Add to Cart' }}
+      </button>
+    </div>
+  </div>
 </div>
