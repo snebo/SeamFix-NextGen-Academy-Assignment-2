@@ -7,20 +7,21 @@
 <!-- * * * * * * * to get started with your project! * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 
-<app-navbar
-  [cartCount]="cart.length"
-  (searchRequest)="handleSearch($event)">
-</app-navbar>
-
-<main class="product-grid">
- <app-product-card
-     *ngFor = "let item of filteredProducts"
-      [product]="item"
-      [isSelected]="isProductInCart(item.id)"
-      (cardClicked)="handleCardClicked($event)">
-    </app-product-card>
-</main>
-
+<!-- <app-navbar -->
+<!--   [cartCount]="cart.length" -->
+<!--   (searchRequest)="handleSearch($event)"> -->
+<!-- </app-navbar> -->
+<!---->
+<!-- <main class="product-grid"> -->
+<!--  <app-product-card -->
+<!--      *ngFor = "let item of filteredProducts" -->
+<!--       [product]="item" -->
+<!--       [isSelected]="isProductInCart(item.id)" -->
+<!--       (cardClicked)="handleCardClicked($event)"> -->
+<!--     </app-product-card> -->
+<!-- </main> -->
+<!---->
+<router-outlet />
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->

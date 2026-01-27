@@ -1,0 +1,21 @@
+<app-navbar [cartCount]="cart.length"></app-navbar>
+<div class="product-detail-container" *ngIf="product">
+  <button class="back-button" (click)="goBack()">← Back to Products</button>
+
+  <div class="product-detail">
+    <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+
+    <div class="product-info">
+      <h1>{{ product.name }}</h1>
+      <p class="description">{{ product.description }}</p>
+      <p class="price">${{ product.price.toFixed(2) }}</p>
+
+      <button
+        class="cart-button"
+        [class.in-cart]="isInCart"
+        (click)="toggleCart()">
+        {{ isInCart ? 'Remove from Cart' : 'Add to Cart' }}
+      </button>
+    </div>
+  </div>
+</div>
