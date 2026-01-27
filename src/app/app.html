@@ -13,13 +13,13 @@
 </app-navbar>
 
 <main class="product-grid">
-  @for (item of filteredProducts; track item.id) {
-    <app-product-card
+ <app-product-card
+     *ngFor = "let item of filteredProducts"
       [product]="item"
       [isSelected]="isProductInCart(item.id)"
       (cardClicked)="handleCardClicked($event)">
     </app-product-card>
-  } </main>
+</main>
 
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->

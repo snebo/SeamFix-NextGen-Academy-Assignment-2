@@ -1,0 +1,54 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Wireless Headphones",
+      "description": "Premium noise-cancelling wireless headphones with 30-hour battery life",
+      "price": 199.99,
+      "category": "Electronics",
+      "imageUrl": "https://via.placeholder.com/400x300/4A90E2/ffffff?text=Headphones",
+      "inStock": true,
+      "rating": 4.5
+    },
+    {
+      "id": 2,
+      "name": "Smart Watch",
+      "description": "Fitness tracker with heart rate monitoring and GPS",
+      "price": 249.99,
+      "category": "Electronics",
+      "imageUrl": "https://via.placeholder.com/400x300/50E3C2/ffffff?text=Smart+Watch",
+      "inStock": true,
+      "rating": 4.2
+    },
+    {
+      "id": 3,
+      "name": "Mechanical Keyboard",
+      "description": "RGB mechanical keyboard with blue switches",
+      "price": 89.99,
+      "category": "Accessories",
+      "imageUrl": "https://via.placeholder.com/400x300/F5A623/ffffff?text=Keyboard",
+      "inStock": true,
+      "rating": 4.7
+    },
+    {
+      "id": 4,
+      "name": "Gaming Mouse",
+      "description": "Ergonomic gaming mouse with adjustable DPI",
+      "price": 59.99,
+      "category": "Accessories",
+      "imageUrl": "https://via.placeholder.com/400x300/9013FE/ffffff?text=Mouse",
+      "inStock": false,
+      "rating": 4.3
+    },
+    {
+      "id": 5,
+      "name": "Portable Bluetooth Speaker",
+      "description": "Waterproof speaker with deep bass",
+      "price": 129.99,
+      "category": "Audio",
+      "imageUrl": "https://via.placeholder.com/400x300/B8E986/ffffff?text=Speaker",
+      "inStock": true,
+      "rating": 4.6
+    }
+  ]
+}
