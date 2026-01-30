@@ -3,27 +3,32 @@ import { ProductList } from './components/product-list/product-list';
 import { ProductDetail } from './components/product-detail/product-detail';
 import { Cart } from './components/cart/cart';
 import { NotFound } from './components/not-found/not-found';
+import { ProductFormComponent } from './components/product-form/product-form';
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'products',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'products',
-    component: ProductList
+    component: ProductList,
+  },
+  {
+    path: 'products/new',
+    component: ProductFormComponent,
   },
   {
     path: 'products/:id',
-    component: ProductDetail
+    component: ProductDetail,
   },
   {
     path: 'cart',
-    component: Cart
+    component: Cart,
   },
   {
     path: '**',
-    component: NotFound
-  }
+    component: NotFound,
+  },
 ];

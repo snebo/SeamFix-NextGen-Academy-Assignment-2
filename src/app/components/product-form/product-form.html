@@ -1,0 +1,59 @@
+<div class="form-container">
+  <h2>Create New Product</h2>
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" />
+      <div *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched" class="error">
+        Name is required and must be at least 3 characters long.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description"></textarea>
+      <div *ngIf="productForm.get('description')?.invalid && productForm.get('description')?.touched" class="error">
+        Description is required and must be at least 10 characters long.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input id="price" type="number" formControlName="price" />
+      <div *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched" class="error">
+        Price is required and must be at least 50.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="category">Category</label>
+      <input id="category" formControlName="category" />
+      <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="error">
+        Category is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="imageUrl">Image URL</label>
+      <input id="imageUrl" formControlName="imageUrl" />
+      <div *ngIf="productForm.get('imageUrl')?.invalid && productForm.get('imageUrl')?.touched" class="error">
+        A valid Image URL is required.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="rating">Rating</label>
+      <input id="rating" type="number" formControlName="rating" />
+      <div *ngIf="productForm.get('rating')?.invalid && productForm.get('rating')?.touched" class="error">
+        Rating must be between 0 and 5.
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="inStock">In Stock</label>
+      <input id="inStock" type="checkbox" formControlName="inStock" />
+    </div>
+
+    <button type="submit" [disabled]="productForm.invalid">Create Product</button>
+  </form>
+</div>
