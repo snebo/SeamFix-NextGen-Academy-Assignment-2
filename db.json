@@ -1,7 +1,7 @@
 {
   "products": [
     {
-      "id": 1,
+      "id": "1",
       "name": "Wireless Headphones",
       "description": "Premium noise-cancelling wireless headphones with 30-hour battery life",
       "price": 199.99,
@@ -11,7 +11,7 @@
       "rating": 4.5
     },
     {
-      "id": 2,
+      "id": "2",
       "name": "Smart Watch",
       "description": "Fitness tracker with heart rate monitoring and GPS",
       "price": 249.99,
@@ -21,7 +21,7 @@
       "rating": 4.2
     },
     {
-      "id": 3,
+      "id": "3",
       "name": "Mechanical Keyboard",
       "description": "RGB mechanical keyboard with blue switches",
       "price": 89.99,
@@ -31,7 +31,7 @@
       "rating": 4.7
     },
     {
-      "id": 4,
+      "id": "4",
       "name": "Gaming Mouse",
       "description": "Ergonomic gaming mouse with adjustable DPI",
       "price": 59.99,
@@ -41,7 +41,7 @@
       "rating": 4.3
     },
     {
-      "id": 5,
+      "id": "5",
       "name": "Portable Bluetooth Speaker",
       "description": "Waterproof speaker with deep bass",
       "price": 129.99,
@@ -49,6 +49,36 @@
       "imageUrl": "https://via.placeholder.com/400x300/B8E986/ffffff?text=Speaker",
       "inStock": true,
       "rating": 4.6
+    },
+    {
+      "id": "829d",
+      "name": "Bag of rice",
+      "description": "a 50kg Bag of parboiled rice.. that sounds weird and mushy, but trust the technology; we found a way",
+      "price": 50,
+      "category": "Grains",
+      "imageUrl": "https://imageOfRice",
+      "inStock": false,
+      "rating": 0
+    },
+    {
+      "id": "391b",
+      "name": "Bag of rice V2",
+      "description": "what can i say, I really like bags of rice. and obviously, it must be more expensive that a regular bag of rice",
+      "price": 80,
+      "category": "grains",
+      "imageUrl": "https://imageOfRiceV2",
+      "inStock": true,
+      "rating": 5,
+      "properties": [
+        {
+          "color": "power!!!",
+          "weight": "50"
+        },
+        {
+          "color": "green",
+          "weight": "50"
+        }
+      ]
     }
   ]
 }

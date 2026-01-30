@@ -38,4 +38,8 @@ export class ProductService {
   getCart(): Product[] {
     return this.cart();
   }
+
+  createProduct(product: Product): Observable<Product> {
+    return this.http.post<Product>(this.productJsonApiUrl, product);
+  }
 }

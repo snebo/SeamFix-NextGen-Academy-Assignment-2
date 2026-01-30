@@ -3,11 +3,13 @@ import { provideRouter } from '@angular/router';
 import {provideHttpClient} from '@angular/common/http'
 
 import { routes } from './app.routes';
+import { ProductService } from './service/product';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient()
-  ]
+    provideHttpClient(),
+    ProductService,
+  ],
 };

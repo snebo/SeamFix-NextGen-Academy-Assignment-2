@@ -1,7 +1,7 @@
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 1.5rem; /* This adds gap both horizontally and vertically */
+  gap: 2rem; /* This adds gap both horizontally and vertically */
   padding: 1rem;
   max-width: 1400px;
   margin: 0 auto;
@@ -11,8 +11,6 @@
   .product-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     padding: 1rem;
-    gap: 1rem;
-    row-gap: 1rem;
-    column-gap: 1rem;
+    gap: 1.5rem;
   }
 }
