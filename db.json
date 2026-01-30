@@ -59,6 +59,26 @@
       "imageUrl": "https://imageOfRice",
       "inStock": false,
       "rating": 0
+    },
+    {
+      "id": "391b",
+      "name": "Bag of rice V2",
+      "description": "what can i say, I really like bags of rice. and obviously, it must be more expensive that a regular bag of rice",
+      "price": 80,
+      "category": "grains",
+      "imageUrl": "https://imageOfRiceV2",
+      "inStock": true,
+      "rating": 5,
+      "properties": [
+        {
+          "color": "power!!!",
+          "weight": "50"
+        },
+        {
+          "color": "green",
+          "weight": "50"
+        }
+      ]
     }
   ]
 }

@@ -54,6 +54,33 @@
       <input id="inStock" type="checkbox" formControlName="inStock" />
     </div>
 
+    <div formArrayName="properties">
+      <h3>Properties</h3>
+      <div *ngFor="let property of properties.controls; let i = index" [formGroupName]="i" class="property-group">
+        <div class="form-group">
+          <label [for]="'color-' + i">Color</label>
+          <input [id]="'color-' + i" formControlName="color" />
+          <div *ngIf="property.get('color')?.invalid && property.get('color')?.touched" class="error">
+            Color is required.
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label [for]="'weight-' + i">Weight</label>
+          <input [id]="'weight-' + i" formControlName="weight" />
+          <div *ngIf="property.get('weight')?.invalid && property.get('weight')?.touched" class="error">
+            Weight is required.
+          </div>
+        </div>
+
+        <button type="button" (click)="removeProperty(i)" [disabled]="properties.length === 1">
+          Remove Property
+        </button>
+      </div>
+
+      <button type="button" (click)="addProperty()">Add Property</button>
+    </div>
+
     <button type="submit" [disabled]="productForm.invalid">Create Product</button>
   </form>
 </div>
