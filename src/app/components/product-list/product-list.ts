@@ -56,7 +56,10 @@ export class ProductList implements OnInit {
   }
 
   ngOnInit() {
-    this.loadProducts();
+    // Only fetch products if they haven't been loaded yet
+    if (!this.stateService.currentStateValue.productsLoaded) {
+      this.loadProducts();
+    }
   }
 
   loadProducts() {

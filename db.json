@@ -87,6 +87,22 @@
       "price": 50,
       "category": "grains",
       "imageUrl": "https://images_of_three_bags_of_rice"
+    },
+    {
+      "id": "7ff2",
+      "name": "yet another bag of rice",
+      "description": "yes.. there might be better examples than bags of rice, but.... i feel like we should double down at this point",
+      "price": 50,
+      "category": "grains",
+      "imageUrl": "https://tired_of_rice.com"
+    },
+    {
+      "id": "0ba1",
+      "name": "testing",
+      "description": "got tired of bags of rice",
+      "price": 50,
+      "category": "grains",
+      "imageUrl": "https://imageOfRiceV2"
     }
   ]
 }

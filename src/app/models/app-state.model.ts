@@ -4,4 +4,5 @@ export interface AppState {
   products: Product[];
   cart: Product[];
   loading: boolean;
+  productsLoaded: boolean;
 }
