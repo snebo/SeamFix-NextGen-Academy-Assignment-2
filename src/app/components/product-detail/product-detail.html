@@ -1,37 +1,59 @@
-<app-navbar [cartCount]="cart.length"></app-navbar>
-<div class="product-detail-container" *ngIf="product">
+<app-navbar [cartCount]="(cartCount$ | async) ?? 0"></app-navbar>
+
+<div class="product-detail-container">
   <button class="back-button" (click)="goBack()">← Back to Products</button>
 
-  <div class="product-detail">
-    <div class="product-image-section">
-      <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
-      <span class="category-badge">{{ product.category }}</span>
-    </div>
-
-    <div class="product-info">
-      <h1>{{ product.name }}</h1>
-      <p class="description">{{ product.description }}</p>
-      <p class="price">${{ product.price.toFixed(2) }}</p>
-
-      <div class="product-meta">
-        <div class="meta-item">
-          <strong>Category:</strong> {{ product.category }}
-        </div>
-        <div class="meta-item">
-          <strong>Product ID:</strong> {{ product.id }}
-        </div>
-      </div>
-
-      <button
-        class="cart-button"
-        [class.in-cart]="isInCart"
-        (click)="toggleCart()">
-        {{ isInCart ? '✓ Remove from Cart' : '+ Add to Cart' }}
-      </button>
-
-      <div *ngIf="isInCart" class="cart-status">
-        <span class="status-icon">✓</span> This item is in your cart
-      </div>
+  <!-- 1. Loading State -->
+  <div *ngIf="loading$ | async" class="centered-message">
+    <div>
+      <div class="loading-spinner"></div>
+      <p>Loading product details...</p>
     </div>
   </div>
+
+  <!-- 2. Error State -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- 3. Success and Not Found States -->
+  <ng-container *ngIf="!(loading$ | async) && !errorMessage">
+    <div *ngIf="product$ | async as product; else notFound">
+      <div class="product-detail">
+        <div class="product-image-section">
+          <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+          <span class="category-badge">{{ product.category }}</span>
+        </div>
+
+        <div class="product-info">
+          <h1>{{ product.name }}</h1>
+          <p class="description">{{ product.description }}</p>
+          <p class="price">{{ product.price | currency }}</p>
+
+          <div class="product-meta">
+            <div class="meta-item">
+              <strong>Category:</strong> {{ product.category }}
+            </div>
+            <div class="meta-item">
+              <strong>Product ID:</strong> {{ product.id }}
+            </div>
+          </div>
+
+          <button
+            class="cart-button"
+            [class.in-cart]="isInCart$ | async"
+            (click)="toggleCart()">
+            {{ (isInCart$ | async) ? '✓ In Cart' : '+ Add to Cart' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Template for "Not Found" state -->
+  <ng-template #notFound>
+    <div class="centered-message">
+      <p>Product not found.</p>
+    </div>
+  </ng-template>
 </div>

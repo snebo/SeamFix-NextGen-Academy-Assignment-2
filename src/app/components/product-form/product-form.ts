@@ -9,6 +9,8 @@ import {
 import { CommonModule } from '@angular/common';
 import { ProductService } from '../../service/product';
 import { Router } from '@angular/router';
+import { StateService } from '../../service/state.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-form',
@@ -19,58 +21,47 @@ import { Router } from '@angular/router';
 })
 export class ProductFormComponent {
   productForm: FormGroup;
+  loading$: Observable<boolean>;
+  errorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-    private router: Router
+    private router: Router,
+    private stateService: StateService
   ) {
+    this.loading$ = this.stateService.loading$;
+
     this.productForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       description: ['', [Validators.required, Validators.minLength(10)]],
       price: [50, [Validators.required, Validators.min(50)]],
       category: ['', Validators.required],
       imageUrl: ['', [Validators.required, Validators.pattern('https?://.+')]],
-      inStock: [false],
-      rating: [0, [Validators.min(0), Validators.max(5)]],
-      properties: this.fb.array([this.createProperty()]),
     });
-  }
-
-  createProperty(): FormGroup {
-    return this.fb.group({
-      color: ['', Validators.required],
-      weight: ['', Validators.required],
-    });
-  }
-
-  get properties(): FormArray {
-    return this.productForm.get('properties') as FormArray;
-  }
-
-  addProperty(): void {
-    this.properties.push(this.createProperty());
-  }
-
-  removeProperty(index: number): void {
-    if (this.properties.length > 1) {
-      this.properties.removeAt(index);
-    }
   }
 
   onSubmit(): void {
-    if (this.productForm.valid) {
-      this.productService.createProduct(this.productForm.value).subscribe({
-        next: (res) => {
-          console.log('Product created successfully!', res);
-          this.productForm.reset();
-          this.router.navigate(['/products']);
-        },
-        error: (err) => {
-          console.error('Error creating product:', err);
-        },
-      });
+    if (this.productForm.invalid) {
+      return;
     }
+
+    this.stateService.setLoading(true);
+    this.errorMessage = null;
+
+    this.productService.createProduct(this.productForm.value).subscribe({
+      next: (res) => {
+        console.log('Product created successfully!', res);
+        this.stateService.addProduct(res); // Add the new product to the state
+        this.stateService.setLoading(false);
+        this.router.navigate(['/']);
+      },
+      error: (err) => {
+        console.error('Error creating product:', err);
+        this.errorMessage = err.message;
+        this.stateService.setLoading(false);
+      },
+    });
   }
 }
 

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Product } from '../../models/product.model';
-import { ProductService } from '../../service/product';
 import { Navbar } from '../../navbar/navbar';
+import { StateService } from '../../service/state.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cart',
@@ -12,32 +14,27 @@ import { Navbar } from '../../navbar/navbar';
   templateUrl: './cart.html',
   styleUrl: './cart.css'
 })
-export class Cart implements OnInit {
-  cartItems: Product[] = [];
+export class Cart {
+  cart$: Observable<Product[]>;
+  cartCount$: Observable<number>;
+  totalPrice$: Observable<number>;
 
   constructor(
-    private productService: ProductService,
+    private stateService: StateService,
     private router: Router
-  ) {}
-
-  ngOnInit() {
-    this.cartItems = this.productService.getCart();
+  ) {
+    this.cart$ = this.stateService.cart$;
+    this.cartCount$ = this.cart$.pipe(map(cart => cart.length));
+    this.totalPrice$ = this.cart$.pipe(
+      map(cart => cart.reduce((total, item) => total + item.price, 0))
+    );
   }
 
-  removeFromCart(product: Product) {
-    this.productService.toggleCart(product);
-    this.cartItems = this.productService.getCart();
-  }
-
-  getTotalPrice(): number {
-    return this.cartItems.reduce((total, item) => total + item.price, 0);
+  removeFromCart(productId: number) {
+    this.stateService.removeFromCart(productId);
   }
 
   continueShopping() {
-    this.router.navigate(['/products']);
-  }
-
-  get cart(): Product[] {
-    return this.productService.getCart();
+    this.router.navigate(['/']);
   }
 }

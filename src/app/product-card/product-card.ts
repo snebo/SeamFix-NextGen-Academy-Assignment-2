@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Product } from '../models/product.model';
+import { StateService } from '../service/state.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-product-card',
@@ -10,12 +13,22 @@ import { Product } from '../models/product.model';
   templateUrl: './product-card.html',
   styleUrl: './product-card.css'
 })
-export class ProductCard {
+export class ProductCard implements OnInit {
   @Input() product!: Product;
-  @Input() isSelected: boolean = false;
   @Output() addToCart = new EventEmitter<Product>();
 
-  constructor(private router: Router) {}
+  isSelected$!: Observable<boolean>;
+
+  constructor(
+    private router: Router,
+    private stateService: StateService
+  ) {}
+
+  ngOnInit() {
+    this.isSelected$ = this.stateService.cart$.pipe(
+      map(cart => cart.some(p => p.id === this.product.id))
+    );
+  }
 
   onAddToCart(event: Event) {
     event.stopPropagation(); // Prevent navigation when clicking add to cart

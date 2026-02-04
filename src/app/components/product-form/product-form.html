@@ -1,6 +1,12 @@
 <div class="form-container">
   <h2>Create New Product</h2>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+    <!-- Global Error Message -->
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
     <div class="form-group">
       <label for="name">Name</label>
       <input id="name" formControlName="name" />
@@ -41,46 +47,8 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="rating">Rating</label>
-      <input id="rating" type="number" formControlName="rating" />
-      <div *ngIf="productForm.get('rating')?.invalid && productForm.get('rating')?.touched" class="error">
-        Rating must be between 0 and 5.
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label for="inStock">In Stock</label>
-      <input id="inStock" type="checkbox" formControlName="inStock" />
-    </div>
-
-    <div formArrayName="properties">
-      <h3>Properties</h3>
-      <div *ngFor="let property of properties.controls; let i = index" [formGroupName]="i" class="property-group">
-        <div class="form-group">
-          <label [for]="'color-' + i">Color</label>
-          <input [id]="'color-' + i" formControlName="color" />
-          <div *ngIf="property.get('color')?.invalid && property.get('color')?.touched" class="error">
-            Color is required.
-          </div>
-        </div>
-
-        <div class="form-group">
-          <label [for]="'weight-' + i">Weight</label>
-          <input [id]="'weight-' + i" formControlName="weight" />
-          <div *ngIf="property.get('weight')?.invalid && property.get('weight')?.touched" class="error">
-            Weight is required.
-          </div>
-        </div>
-
-        <button type="button" (click)="removeProperty(i)" [disabled]="properties.length === 1">
-          Remove Property
-        </button>
-      </div>
-
-      <button type="button" (click)="addProperty()">Add Property</button>
-    </div>
-
-    <button type="submit" [disabled]="productForm.invalid">Create Product</button>
+    <button type="submit" [disabled]="productForm.invalid || (loading$ | async)">
+      {{ (loading$ | async) ? 'Creating...' : 'Create Product' }}
+    </button>
   </form>
 </div>

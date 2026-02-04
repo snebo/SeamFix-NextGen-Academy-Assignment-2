@@ -79,6 +79,14 @@
           "weight": "50"
         }
       ]
+    },
+    {
+      "id": "a935",
+      "name": "more bags of rice",
+      "description": "like a group of 5 bags of rice",
+      "price": 50,
+      "category": "grains",
+      "imageUrl": "https://images_of_three_bags_of_rice"
     }
   ]
 }

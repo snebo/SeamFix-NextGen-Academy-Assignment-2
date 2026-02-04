@@ -1,4 +1,4 @@
-<div class="product-card" [class.selected]="isSelected">
+<div class="product-card" [class.selected]="isSelected$ | async">
   <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
   <div class="product-info">
     <h3 class="product-name">{{ product.name }}</h3>
@@ -12,9 +12,9 @@
       </button>
       <button
         class="add-to-cart-btn"
-        [class.in-cart]="isSelected"
+        [class.in-cart]="isSelected$ | async"
         (click)="onAddToCart($event)">
-        {{ isSelected ? 'In Cart' : 'Add to Cart' }}
+        {{ (isSelected$ | async) ? 'In Cart' : 'Add to Cart' }}
       </button>
     </div>
   </div>

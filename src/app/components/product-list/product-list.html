@@ -1,12 +1,34 @@
-<app-navbar
-  [cartCount]="cart.length"
-  (searchRequest)="handleSearch($event)">
-</app-navbar>
-<main class="product-grid">
-  <app-product-card
-    *ngFor="let item of filteredProducts"
-    [product]="item"
-    [isSelected]="isProductInCart(item.id)"
-    (addToCart)="handleAddToCart($event)">
-  </app-product-card>
+<app-navbar [cartCount]="(cartCount$ | async) ?? 0" (searchRequest)="handleSearch($event)"></app-navbar>
+
+<main class="container">
+  <!-- 1. Loading State -->
+  <div *ngIf="loading$ | async" class="centered-message">
+    <div>
+      <div class="loading-spinner"></div>
+      <p>Loading products...</p>
+    </div>
+  </div>
+
+  <!-- 2. Error State -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <!-- 3. Success and Empty States -->
+  <ng-container *ngIf="!(loading$ | async) && !errorMessage">
+    <div *ngIf="filteredProducts$ | async as products" class="product-grid">
+      
+      <!-- a. Success State (with products) -->
+      <app-product-card
+        *ngFor="let item of products"
+        [product]="item"
+        (addToCart)="handleAddToCart($event)">
+      </app-product-card>
+
+      <!-- b. Empty State -->
+      <div *ngIf="products.length === 0" class="centered-message">
+        <p>No products found. Try a different search term.</p>
+      </div>
+    </div>
+  </ng-container>
 </main>
