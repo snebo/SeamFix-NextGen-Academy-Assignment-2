@@ -1,5 +1,5 @@
 <div class="product-card" [class.selected]="isSelected$ | async">
-  <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
+  <img [src]="product.imageUrl" [alt]="product.name" class="product-image" />
   <div class="product-info">
     <h3 class="product-name">{{ product.name }}</h3>
     <p class="product-description">{{ product.description }}</p>
@@ -7,13 +7,12 @@
     <span class="product-category">{{ product.category }}</span>
 
     <div class="button-group">
-      <button class="view-details-btn" (click)="viewDetails()">
-        View Details
-      </button>
+      <button class="view-details-btn" (click)="viewDetails()">View Details</button>
       <button
         class="add-to-cart-btn"
         [class.in-cart]="isSelected$ | async"
-        (click)="onAddToCart($event)">
+        (click)="onAddToCart($event)"
+      >
         {{ (isSelected$ | async) ? 'In Cart' : 'Add to Cart' }}
       </button>
     </div>
