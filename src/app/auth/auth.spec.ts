@@ -6,6 +6,7 @@ import { firstValueFrom, take } from 'rxjs';
 describe('Auth', () => {
   let service: AuthService;
   const USER_EMAIL_KEY = 'userEmail';
+  const USER_PASSWORD_KEY = 'userPassword';
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
@@ -43,9 +44,10 @@ describe('Auth', () => {
     const emissions: boolean[] = [];
     const sub = service.isAuthenticated$.subscribe((v) => emissions.push(v));
 
-    service.login('test@example.com');
+    service.login('test@example.com', '1234567890');
 
     expect(localStorage.getItem(USER_EMAIL_KEY)).toBe('test@example.com');
+    expect(localStorage.getItem(USER_PASSWORD_KEY)).toBe('1234567890');
     expect(service.isLoggedIn()).toBeTruthy();
     expect(service.getCurrentUser()).toBe('test@example.com');
     expect(emissions[emissions.length - 1]).toBeTruthy();
