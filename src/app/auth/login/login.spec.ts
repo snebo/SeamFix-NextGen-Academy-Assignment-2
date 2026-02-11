@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '../auth';
 import { of } from 'rxjs';
 import { vi } from 'vitest';
+import { ActivatedRoute } from '@angular/router';
 
 class MockAuthService {
   isAuthenticated$ = of(false);
@@ -11,6 +12,14 @@ class MockAuthService {
   logOut = vi.fn();
   isLoggedIn = vi.fn(() => false);
   getCurrentUser = vi.fn(() => null);
+}
+
+class MockActivatedRoute {
+  snapshot = {
+    queryParams: {
+      returnUrl: '/products' // Default returnUrl for tests
+    }
+  };
 }
 
 describe('Login', () => {
@@ -21,7 +30,10 @@ describe('Login', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Login, ReactiveFormsModule],
-      providers: [{ provide: AuthService, useClass: MockAuthService }],
+      providers: [
+        { provide: AuthService, useClass: MockAuthService },
+        { provide: ActivatedRoute, useClass: MockActivatedRoute } // Provide mock ActivatedRoute
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Login);
@@ -72,10 +84,12 @@ describe('Login', () => {
   it('submit should call authService.login if form is valid', () => {
     const email = 'test@example.com';
     const password = 'validPassword123';
+    const returnUrl = '/products'; // Based on MockActivatedRoute
+
     component.form.controls['email'].setValue(email);
     component.form.controls['password'].setValue(password);
     component.submit();
-    expect(mockAuthService.login).toHaveBeenCalledWith(email, password);
+    expect(mockAuthService.login).toHaveBeenCalledWith(email, password, returnUrl);
   });
   it('submit() marks all fields as touched when invalid', () => {
     // start invalid by default
