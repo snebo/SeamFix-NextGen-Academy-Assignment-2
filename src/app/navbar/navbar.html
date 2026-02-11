@@ -1,5 +1,5 @@
 <nav class="navbar">
-  <div class="navbar-brand" (click)="navigateToHome()" style="cursor: pointer;">
+  <div class="navbar-brand" (click)="navigateToHome()" style="cursor: pointer">
     <h1>Product Store</h1>
   </div>
 
@@ -8,8 +8,13 @@
       type="text"
       placeholder="Search products..."
       (input)="onSearchInput($event)"
-      class="search-input">
+      class="search-input"
+    />
   </div>
+
+  <button *ngIf="(auth.isAuthenticated$ | async) === true" (click)="auth.logOut()">Logout</button>
+
+  <a *ngIf="(auth.isAuthenticated$ | async) === false" routerLink="/login"> Login </a>
 
   <div class="navbar-cart" (click)="navigateToCart()">
     <span class="cart-icon">🛒</span>

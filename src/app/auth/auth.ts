@@ -25,7 +25,9 @@ export class AuthService {
 
   logOut(): void {
     localStorage.removeItem(USER_EMAIL_KEY);
+    localStorage.removeItem(USER_PASSWORD_KEY);
     this.authStateSubject.next(false);
+    this.router.navigateByUrl('/login');
   }
 
   getCurrentUser(): string | null {
