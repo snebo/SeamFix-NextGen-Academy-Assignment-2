@@ -19,23 +19,26 @@ export const routes: Routes = [
   },
   {
     path: 'products',
-    component: ProductList,
     canActivate: [authGuard],
+    loadComponent: () =>
+      import('./components/product-list/product-list').then((m) => m.ProductList),
   },
   {
     path: 'products/new',
-    component: ProductFormComponent,
     canActivate: [authGuard],
+    loadComponent: () =>
+      import('./components/product-form/product-form').then((m) => m.ProductFormComponent),
   },
   {
     path: 'products/:id',
-    component: ProductDetail,
     canActivate: [authGuard],
+    loadComponent: () =>
+      import('./components/product-detail/product-detail').then((m) => m.ProductDetail),
   },
   {
     path: 'cart',
-    component: Cart,
     canActivate: [authGuard],
+    loadComponent: () => import('./components/cart/cart').then((m) => m.Cart),
   },
   {
     path: '**',
