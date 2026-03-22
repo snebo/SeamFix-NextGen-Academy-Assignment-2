@@ -1,10 +1,15 @@
-import { CanActivateFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import {
+  CanActivateFn,
+  Router,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../auth/auth';
 
 export const authGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
+  state: RouterStateSnapshot,
 ) => {
   const auth = inject(AuthService);
   const router = inject(Router);
@@ -13,7 +18,9 @@ export const authGuard: CanActivateFn = (
     'GUARD isLoggedIn()',
     auth.isLoggedIn(),
     'storage=',
-    localStorage.getItem('userEmail'),
+    localStorage.getItem('accessToken'),
+    'user=',
+    localStorage.getItem('user'),
   );
 
   if (auth.isLoggedIn()) {

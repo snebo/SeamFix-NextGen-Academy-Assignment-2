@@ -13,7 +13,10 @@ import { ActivatedRoute } from '@angular/router';
 export class Login {
   private formBuilder = inject(FormBuilder);
   private auth = inject(AuthService);
-  private route = inject(ActivatedRoute); // Inject ActivatedRoute
+  private route = inject(ActivatedRoute);
+
+  isLoading = false;
+  errorMessage = '';
 
   form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
@@ -25,11 +28,21 @@ export class Login {
       this.form.markAllAsTouched();
       return;
     }
-    const email = this.form.value.email;
-    const password = this.form.value.password;
-    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/products'; // Get returnUrl
 
-    // i assert the variables here because the validator should flag else
-    this.auth.login(email!, password!, returnUrl); // Pass returnUrl to login
+    this.isLoading = true;
+    this.errorMessage = '';
+
+    const { email, password } = this.form.value;
+    const returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/products';
+
+    this.auth.login(email!, password!, returnUrl).subscribe({
+      error: (err) => {
+        this.isLoading = false;
+        this.errorMessage = err.error?.message || 'Invalid email or password';
+      },
+      complete: () => {
+        this.isLoading = false;
+      },
+    });
   }
 }

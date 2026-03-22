@@ -1,37 +1,62 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
-const USER_EMAIL_KEY = 'userEmail';
-const USER_PASSWORD_KEY = 'userPassword';
+const TOKEN_KEY = 'accessToken';
+const USER_KEY = 'user';
 
-@Injectable({
-  providedIn: 'root',
-})
+export interface AuthUser {
+  id: string;
+  email: string;
+  name: string;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  user: AuthUser;
+}
+
+@Injectable({ providedIn: 'root' })
 export class AuthService {
-  constructor(private router: Router) {}
+  private readonly API = `${environment.apiUrl}`;
+
   private authStateSubject = new BehaviorSubject<boolean>(this.hasStoredUser());
   isAuthenticated$ = this.authStateSubject.asObservable();
 
-  login(email: string, password: string, redirectUrl?: string): void {
-    localStorage.setItem(USER_EMAIL_KEY, email);
-    localStorage.setItem(USER_PASSWORD_KEY, password);
-    // TODO: when setting up a register, we can then compare passwords
-    if (true) {
-      this.authStateSubject.next(true);
-      this.router.navigateByUrl(redirectUrl || '/products');
-    }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) {}
+
+  login(email: string, password: string, redirectUrl?: string) {
+    return this.http.post<LoginResponse>(`${this.API}/login`, { email, password }).pipe(
+      tap(({ access_token }) => {
+        const user = { email: email };
+        localStorage.setItem(TOKEN_KEY, access_token);
+        localStorage.setItem(USER_KEY, JSON.stringify(user));
+        this.authStateSubject.next(true);
+        this.router.navigateByUrl(redirectUrl || '/products');
+        console.log('user: ', JSON.stringify(user), 'token: ', access_token);
+      }),
+    );
   }
 
   logOut(): void {
-    localStorage.removeItem(USER_EMAIL_KEY);
-    localStorage.removeItem(USER_PASSWORD_KEY);
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
     this.authStateSubject.next(false);
     this.router.navigateByUrl('/login');
   }
 
-  getCurrentUser(): string | null {
-    return localStorage.getItem(USER_EMAIL_KEY);
+  getToken(): string | null {
+    return localStorage.getItem(TOKEN_KEY);
+  }
+
+  getCurrentUser(): AuthUser | null {
+    const user = localStorage.getItem(USER_KEY);
+    return user ? JSON.parse(user) : null;
   }
 
   isLoggedIn(): boolean {
@@ -39,6 +64,6 @@ export class AuthService {
   }
 
   private hasStoredUser(): boolean {
-    return !!this.getCurrentUser();
+    return !!this.getToken();
   }
 }

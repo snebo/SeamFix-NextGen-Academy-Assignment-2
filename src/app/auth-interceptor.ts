@@ -1,20 +1,20 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { inject } from '@angular/core';
+import { catchError, throwError } from 'rxjs';
+import { AuthService } from './auth/auth';
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  const email = localStorage.getItem('userEmail');
+  const authService = inject(AuthService);
+  const token = authService.getToken();
 
-  // attching the header for product-related endpoints
-  const isProductRequest = req.url.includes('/products') || req.url.includes('/cart'); // TODO: for when i include cart page
+  const authReq = token ? req.clone({ setHeaders: { Authorization: `Bearer ${token}` } }) : req;
 
-  if (!email || !isProductRequest) {
-    return next(req);
-  }
-
-  const authReq = req.clone({
-    setHeaders: {
-      'X-User-Email': email,
-    },
-  });
-
-  return next(authReq);
+  return next(authReq).pipe(
+    catchError((err: HttpErrorResponse) => {
+      if (err.status === 401) {
+        authService.logOut(); // token expired or invalid, force logout
+      }
+      return throwError(() => err);
+    }),
+  );
 };
