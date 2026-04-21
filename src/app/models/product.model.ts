@@ -1,12 +1,12 @@
-// product interface is based on the example that was given to us in the example
+import { Category } from './category.model';
+
 export interface Product {
-  id: number;
+  id?: number;
   name: string;
   description: string;
   price: number;
   imageUrl: string;
-  category: string;
-  rating: number
+  category?: Category;
+  categoryId?: number;
+  rating?: number;
 }
-
-

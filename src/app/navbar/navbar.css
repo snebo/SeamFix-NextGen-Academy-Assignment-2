@@ -2,50 +2,100 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   background-color: #333;
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  min-height: 64px;
 }
 
 .navbar-brand h1 {
   margin: 0;
   font-size: 1.5rem;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .navbar-brand:hover {
   opacity: 0.8;
 }
 
-.navbar-search {
+.navbar-actions {
+  display: flex;
+  gap: 0.5rem;
   flex: 1;
-  max-width: 500px;
+  max-width: 600px;
   margin: 0 2rem;
 }
 
-.search-input {
-  width: 100%;
-  padding: 0.75rem 1rem;
-  border: none;
-  border-radius: 4px;
-  font-size: 1rem;
-  outline: none;
+.navbar-search {
+  flex: 2;
 }
 
-.search-input:focus {
-  box-shadow: 0 0 0 2px #007bff;
+.navbar-filter {
+  flex: 1;
+}
+
+.category-select, .search-input {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  outline: none;
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.category-select {
+  background-color: white;
+  cursor: pointer;
+}
+
+.search-input {
+  background-color: white;
+}
+
+.search-input:focus, .category-select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.auth-btn, .auth-link {
+  color: white;
+  text-decoration: none;
+  background: transparent;
+  border: 1px solid white;
+  padding: 0.4rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.auth-btn:hover, .auth-link:hover {
+  background-color: white;
+  color: #333;
 }
 
 .navbar-cart {
   position: relative;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  border-radius: 4px;
+  justify-content: center;
+  border-radius: 50%;
   transition: background-color 0.2s;
+  width: 40px;
+  height: 40px;
 }
 
 .navbar-cart:hover {
@@ -53,37 +103,51 @@
 }
 
 .cart-icon {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 }
 
 .cart-count {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -5px;
+  right: -5px;
   background-color: #dc3545;
   color: white;
-  border-radius: 50%;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
+  border-radius: 10px;
+  padding: 0.1rem 0.4rem;
+  font-size: 0.7rem;
   font-weight: bold;
-  min-width: 20px;
+  min-width: 16px;
   text-align: center;
+  border: 2px solid #333;
+}
+
+@media (max-width: 992px) {
+  .navbar-actions {
+    margin: 0 1rem;
+  }
 }
 
 @media (max-width: 768px) {
   .navbar {
-    flex-wrap: wrap;
+    flex-direction: column;
     padding: 1rem;
+    gap: 1rem;
   }
 
-  .navbar-search {
-    order: 3;
-    flex-basis: 100%;
-    margin: 1rem 0 0 0;
+  .navbar-actions {
+    margin: 0;
     max-width: 100%;
+    width: 100%;
+    order: 2;
   }
 
-  .navbar-brand h1 {
-    font-size: 1.2rem;
+  .navbar-right {
+    order: 1;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .navbar-brand {
+    align-self: flex-start;
   }
 }

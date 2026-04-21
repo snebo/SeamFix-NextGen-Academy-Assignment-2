@@ -1,4 +1,8 @@
-<app-navbar [cartCount]="(cartCount$ | async) ?? 0" (searchRequest)="handleSearch($event)"></app-navbar>
+<app-navbar 
+  [cartCount]="(cartCount$ | async) ?? 0" 
+  (searchRequest)="handleSearch($event)"
+  (categoryRequest)="handleCategoryChange($event)">
+</app-navbar>
 
 <main class="container">
   <!-- 1. Loading State -->

@@ -16,47 +16,53 @@ import { map, startWith } from 'rxjs/operators';
   styleUrl: './product-list.css'
 })
 export class ProductList implements OnInit {
-  // Observables for reactive state management
   products$: Observable<Product[]>;
   cart$: Observable<Product[]>;
   loading$: Observable<boolean>;
   filteredProducts$: Observable<Product[]>;
   cartCount$: Observable<number>;
 
-  // Subject to handle search query changes
   private searchQuery = new BehaviorSubject<string>('');
+  private categoryQuery = new BehaviorSubject<string>('');
   errorMessage: string | null = null;
 
   constructor(
     private productService: ProductService,
     private stateService: StateService
   ) {
-    // Initialize observables from the state service
     this.products$ = this.stateService.products$;
     this.cart$ = this.stateService.cart$;
     this.loading$ = this.stateService.loading$;
     this.cartCount$ = this.cart$.pipe(map(cart => cart.length));
 
-    // Combine products and search query to get filtered products
     this.filteredProducts$ = combineLatest([
       this.products$,
-      this.searchQuery.asObservable().pipe(startWith(''))
+      this.searchQuery.asObservable().pipe(startWith('')),
+      this.categoryQuery.asObservable().pipe(startWith(''))
     ]).pipe(
-      map(([products, query]) => {
+      map(([products, query, category]) => {
         const searchTerm = query.toLowerCase();
-        if (!searchTerm) {
-          return products;
-        }
-        return products.filter(p =>
-          p.name.toLowerCase().includes(searchTerm) ||
-          p.category.toLowerCase().includes(searchTerm)
-        );
+        const selectedCategory = category.toLowerCase();
+
+        return products.filter(p => {
+          const name = p.name.toLowerCase();
+          const description = (p.description || '').toLowerCase();
+          const pCategory = (typeof p.category === 'string' ? p.category : p.category?.name || '').toLowerCase();
+          
+          const matchesSearch = !searchTerm || 
+                               name.includes(searchTerm) || 
+                               description.includes(searchTerm) ||
+                               pCategory.includes(searchTerm);
+          
+          const matchesCategory = !selectedCategory || pCategory === selectedCategory;
+
+          return matchesSearch && matchesCategory;
+        });
       })
     );
   }
 
   ngOnInit() {
-    // Only fetch products if they haven't been loaded yet
     if (!this.stateService.currentStateValue.productsLoaded) {
       this.loadProducts();
     }
@@ -81,6 +87,10 @@ export class ProductList implements OnInit {
 
   handleSearch(query: string) {
     this.searchQuery.next(query);
+  }
+
+  handleCategoryChange(category: string) {
+    this.categoryQuery.next(category);
   }
 
   handleAddToCart(product: Product) {

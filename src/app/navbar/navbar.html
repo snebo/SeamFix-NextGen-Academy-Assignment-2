@@ -3,21 +3,31 @@
     <h1>Product Store</h1>
   </div>
 
-  <div class="navbar-search">
-    <input
-      type="text"
-      placeholder="Search products..."
-      (input)="onSearchInput($event)"
-      class="search-input"
-    />
+  <div class="navbar-actions">
+    <div class="navbar-search">
+      <input
+        type="text"
+        placeholder="Search products..."
+        (input)="onSearchInput($event)"
+        class="search-input"
+      />
+    </div>
+
+    <div class="navbar-filter">
+      <select (change)="onCategoryChange($event)" class="category-select">
+        <option value="">All Categories</option>
+        <option *ngFor="let cat of categories$ | async" [value]="cat.name">{{ cat.name }}</option>
+      </select>
+    </div>
   </div>
 
-  <button *ngIf="(auth.isAuthenticated$ | async) === true" (click)="auth.logOut()">Logout</button>
+  <div class="navbar-right">
+    <button *ngIf="(auth.isAuthenticated$ | async) === true" (click)="auth.logOut()" class="auth-btn">Logout</button>
+    <a *ngIf="(auth.isAuthenticated$ | async) === false" routerLink="/login" class="auth-link">Login</a>
 
-  <a *ngIf="(auth.isAuthenticated$ | async) === false" routerLink="/login"> Login </a>
-
-  <div class="navbar-cart" (click)="navigateToCart()">
-    <span class="cart-icon">🛒</span>
-    <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+    <div class="navbar-cart" (click)="navigateToCart()">
+      <span class="cart-icon">🛒</span>
+      <span class="cart-count" *ngIf="cartCount > 0">{{ cartCount }}</span>
+    </div>
   </div>
 </nav>

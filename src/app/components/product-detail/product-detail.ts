@@ -69,6 +69,13 @@ export class ProductDetail implements OnInit {
     this.stateService.setLoading(false);
   }
 
+  getCategoryName(product: Product | null): string {
+    if (!product || !product.category) return 'Uncategorized';
+    return typeof product.category === 'string' 
+      ? product.category 
+      : product.category.name;
+  }
+
   addToCart() {
     const product = this.productSubject.getValue();
     if (product) {
@@ -79,7 +86,7 @@ export class ProductDetail implements OnInit {
   removeFromCart() {
     const product = this.productSubject.getValue();
     if (product) {
-      this.stateService.removeFromCart(product.id);
+      if (product.id) this.stateService.removeFromCart(product.id);
     }
   }
 

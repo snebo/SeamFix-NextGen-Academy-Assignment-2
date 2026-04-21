@@ -19,6 +19,13 @@ export class ProductCard implements OnInit {
 
   isSelected$!: Observable<boolean>;
 
+  get categoryName(): string {
+    if (!this.product.category) return 'Uncategorized';
+    return typeof this.product.category === 'string' 
+      ? this.product.category 
+      : this.product.category.name;
+  }
+
   constructor(
     private router: Router,
     private stateService: StateService
@@ -26,7 +33,7 @@ export class ProductCard implements OnInit {
 
   ngOnInit() {
     this.isSelected$ = this.stateService.cart$.pipe(
-      map(cart => cart.some(p => p.id === this.product.id))
+      map(cart => this.product.id ? cart.some(p => p.id === this.product.id) : false)
     );
   }
 
@@ -36,9 +43,11 @@ export class ProductCard implements OnInit {
   }
 
   viewDetails() {
+    if (!this.product.id) return;
+    
     // Navigate with category as query param
     this.router.navigate(['/products', this.product.id], {
-      queryParams: { category: this.product.category }
+      queryParams: { category: this.product.category?.name || this.product.category }
     });
   }
 }

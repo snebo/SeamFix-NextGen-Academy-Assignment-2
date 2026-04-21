@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div class="form-container">
   <h2>Create New Product</h2>
   <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
@@ -31,11 +33,39 @@
       </div>
     </div>
 
-    <div class="form-group">
-      <label for="category">Category</label>
-      <input id="category" formControlName="category" />
-      <div *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched" class="error">
-        Category is required.
+    <div class="category-section">
+      <div class="category-header">
+        <label>Category</label>
+        <button type="button" class="toggle-btn" (click)="toggleCategoryType()">
+          {{ isNewCategory ? 'Select Existing' : 'Create New' }}
+        </button>
+      </div>
+
+      <!-- Select Existing -->
+      <div *ngIf="!isNewCategory" class="form-group">
+        <select id="categoryId" formControlName="categoryId">
+          <option value="" disabled selected>Select a category</option>
+          <option *ngFor="let cat of categories$ | async" [value]="cat.id">{{ cat.name }}</option>
+        </select>
+        <div *ngIf="productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched" class="error">
+          Category is required.
+        </div>
+      </div>
+
+      <!-- Create New -->
+      <div *ngIf="isNewCategory" class="new-category-fields">
+        <div class="form-group">
+          <label for="newCategoryName">New Category Name</label>
+          <input id="newCategoryName" formControlName="newCategoryName" placeholder="Enter category name" />
+          <div *ngIf="productForm.get('newCategoryName')?.invalid && productForm.get('newCategoryName')?.touched" class="error">
+            Category name is required (min 3 chars).
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="newCategoryDescription">New Category Description (Optional)</label>
+          <input id="newCategoryDescription" formControlName="newCategoryDescription" placeholder="What is this category about?" />
+        </div>
       </div>
     </div>
 
@@ -47,7 +77,7 @@
       </div>
     </div>
 
-    <button type="submit" [disabled]="productForm.invalid || (loading$ | async)">
+    <button type="submit" class="submit-btn" [disabled]="productForm.invalid || (loading$ | async)">
       {{ (loading$ | async) ? 'Creating...' : 'Create Product' }}
     </button>
   </form>

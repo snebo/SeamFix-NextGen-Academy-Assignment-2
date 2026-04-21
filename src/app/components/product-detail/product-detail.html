@@ -22,7 +22,7 @@
       <div class="product-detail">
         <div class="product-image-section">
           <img [src]="product.imageUrl" [alt]="product.name" class="product-image">
-          <span class="category-badge">{{ product.category }}</span>
+          <span class="category-badge">{{ getCategoryName(product) }}</span>
         </div>
 
         <div class="product-info">
@@ -32,7 +32,7 @@
 
           <div class="product-meta">
             <div class="meta-item">
-              <strong>Category:</strong> {{ product.category }}
+              <strong>Category:</strong> {{ getCategoryName(product) }}
             </div>
             <div class="meta-item">
               <strong>Product ID:</strong> {{ product.id }}
