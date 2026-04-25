@@ -18,9 +18,17 @@ export interface LoginResponse {
   user: AuthUser;
 }
 
+export interface SignUpData {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string;
+  password: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly API = `${environment.apiUrl}`;
+  private readonly API = `${environment.baseUrl}`;
 
   private authStateSubject = new BehaviorSubject<boolean>(this.hasStoredUser());
   isAuthenticated$ = this.authStateSubject.asObservable();
@@ -29,6 +37,10 @@ export class AuthService {
     private http: HttpClient,
     private router: Router,
   ) {}
+
+  signUp(userData: SignUpData) {
+    return this.http.post(`${this.API}/sign-in`, userData);
+  }
 
   login(email: string, password: string, redirectUrl?: string) {
     return this.http.post<LoginResponse>(`${this.API}/login`, { email, password }).pipe(

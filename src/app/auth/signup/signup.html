@@ -1,0 +1,63 @@
+<h2>Sign Up</h2>
+
+<div *ngIf="errorMessage" style="color: red; margin-bottom: 10px;">
+  {{ errorMessage }}
+</div>
+
+<div *ngIf="successMessage" style="color: green; margin-bottom: 10px;">
+  {{ successMessage }}
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <label>
+    First Name
+    <input type="text" formControlName="first_name" />
+  </label>
+  <div *ngIf="form.controls.first_name.touched && form.controls.first_name.invalid">
+    <small *ngIf="form.controls.first_name.errors?.['required']">First name is required.</small>
+  </div>
+
+  <label>
+    Last Name
+    <input type="text" formControlName="last_name" />
+  </label>
+  <div *ngIf="form.controls.last_name.touched && form.controls.last_name.invalid">
+    <small *ngIf="form.controls.last_name.errors?.['required']">Last name is required.</small>
+  </div>
+
+  <label>
+    Email
+    <input type="email" formControlName="email" />
+  </label>
+  <div *ngIf="form.controls.email.touched && form.controls.email.invalid">
+    <small *ngIf="form.controls.email.errors?.['required']">Email is required.</small>
+    <small *ngIf="form.controls.email.errors?.['email']">Enter a valid email.</small>
+  </div>
+
+  <label>
+    Phone Number
+    <input type="text" formControlName="phone_number" />
+  </label>
+  <div *ngIf="form.controls.phone_number.touched && form.controls.phone_number.invalid">
+    <small *ngIf="form.controls.phone_number.errors?.['required']">Phone number is required.</small>
+  </div>
+
+  <label>
+    Password
+    <input type="password" formControlName="password" />
+  </label>
+  <div *ngIf="form.controls.password.touched && form.controls.password.invalid">
+    <small *ngIf="form.controls.password.errors?.['required']">Password is required.</small>
+    <small *ngIf="form.controls.password.errors?.['minlength']">
+      Password must be at least 6 characters.
+    </small>
+  </div>
+
+  <button type="submit" [disabled]="isLoading">
+    {{ isLoading ? 'Signing up...' : 'Sign Up' }}
+  </button>
+</form>
+
+<p>
+  Already have an account? <a routerLink="/login">Login</a>
+</p>

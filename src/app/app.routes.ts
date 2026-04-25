@@ -18,6 +18,10 @@ export const routes: Routes = [
     component: Login,
   },
   {
+    path: 'signup',
+    loadComponent: () => import('./auth/signup/signup').then((m) => m.Signup),
+  },
+  {
     path: 'products',
     canActivate: [authGuard],
     loadComponent: () =>
